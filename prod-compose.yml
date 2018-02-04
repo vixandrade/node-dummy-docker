@@ -1,0 +1,26 @@
+version: "2"
+services:
+  nginx:
+    build: ./nginx
+    links:
+      #- cetesb_api
+      - dummy_api
+    ports:
+        - "80:80"
+
+  #cetesb_api:
+  #  build: ./cetesb-api
+  #  ports:
+  #    - "3000:3000"
+  dummy_api:
+    build: ./dummy-app
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+  mongo:
+    image: mongo
+    volumes:
+      - ./packed-up-data/:/data/db
+    ports:
+      - "27017:27017"
